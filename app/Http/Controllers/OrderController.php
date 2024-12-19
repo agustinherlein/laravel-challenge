@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use OrderService;
 
 class OrderController extends Controller
 {
+    protected OrderService $orderService;
+
+    public function __construct(OrderService $orderService)
+    {
+        $this->orderService = $orderService;
+        parent::__construct();
+    }
     /**
      * Display a listing of the resource.
      */
@@ -20,7 +28,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -28,7 +36,9 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $order = $this->orderService->create($data);
+        return json_encode("Se guardó correctamente la orden $order->id");
     }
 
     /**
