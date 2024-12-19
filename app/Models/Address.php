@@ -10,16 +10,8 @@ class Address extends Model
     /** @use HasFactory<\Database\Factories\AddressFactory> */
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-        'street',
-        'street_number',
-        'floor',
-        'apartment',
+        'street_address',
         'city',
         'province',
         'postal_code',
