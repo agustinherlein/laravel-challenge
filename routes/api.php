@@ -8,7 +8,7 @@ Route::get('status', function(){
     return 'ok';
 });
 
-Route::resource('orders', OrderController::class);
+Route::apiResource('orders', OrderController::class);
 
 Route::get('/user', function (Request $request) {
     return $request->user();

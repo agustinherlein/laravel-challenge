@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained();
             $table->foreignId('product_id')->constrained();
-            $table->unsignedSmallInteger('number_of_items')->default(1);
+            $table->unsignedSmallInteger('amount')->default(1);
             $table->timestamps();
         });
     }

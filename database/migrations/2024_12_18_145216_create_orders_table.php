@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamp('paid_at')->nullable();
             $table->decimal('total_amount', 15, 2);
-            $table->foreignId('status_id')->constrained();
+            $table->unsignedBigInteger('status_id');
+            $table->foreign('status_id')->references('id')->on('enum_order_status');
             $table->foreignId('client_id')->constrained();
             $table->foreignId('address_id')->constrained();
             $table->timestamps();
