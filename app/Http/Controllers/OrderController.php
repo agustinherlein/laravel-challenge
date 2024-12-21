@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Exception;
 use Illuminate\Http\Request;
@@ -46,7 +47,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return json_encode($this->orderService->show($order->id));
+        return json_encode(new OrderResource($order));
     }
 
     /**

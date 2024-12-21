@@ -31,6 +31,11 @@ class Order extends Model
         return $this->belongsTo(Address::class);
     }
 
+    public function status() : BelongsTo
+    {
+        return $this->belongsTo(EnumOrderStatus::class, 'status_id', 'id');
+    }
+
     public function products() : BelongsToMany
     {
         return $this->belongsToMany(Product::class);
