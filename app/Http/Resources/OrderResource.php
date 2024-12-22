@@ -21,7 +21,7 @@ class OrderResource extends JsonResource
             'client_email' => $this->client->email,
             'address' => $this->address->street_address . ', ' . $this->address->city . ', ' . $this->address->country,
             'total_amount' => $this->total_amount,
-            'products' => $this->products
+            'products' => ProductResource::collection($this->products)
         ];
     }
 }

@@ -22,7 +22,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return "ok";
+        return response()->json(OrderResource::collection(Order::all()));
     }
 
 
@@ -47,7 +47,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return json_encode(new OrderResource($order));
+        return response()->json(new OrderResource($order));
     }
 
     /**

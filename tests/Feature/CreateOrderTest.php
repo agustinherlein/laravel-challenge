@@ -25,7 +25,7 @@ class CreateOrderTest extends TestCase
             "products" => [
                 [
                     "id" => 1,
-                    "number_of_items" => 3
+                    "amount" => 3
                 ],
                 [
                     "id" => 3
