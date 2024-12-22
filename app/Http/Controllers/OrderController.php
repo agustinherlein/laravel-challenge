@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\BaseApiController;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Exception;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 
-class OrderController extends Controller
+class OrderController extends BaseApiController
 {
     protected OrderService $orderService;
 
@@ -22,7 +23,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return response()->json(OrderResource::collection(Order::all()));
+        return $this->sendResponse(OrderResource::collection(Order::all()));
     }
 
 
@@ -34,11 +35,9 @@ class OrderController extends Controller
         try {
             $data = $request->all();
             $order = $this->orderService->create($data);
-            return json_encode("Se guardó correctamente la orden $order->id");
+            return $this->sendResponse($order, "Se guardó correctamente la orden $order->id");
         } catch (Exception $e) {
-            return json_encode([
-                "error" => $e->getMessage()
-            ]);
+            return $this->sendError($e->getMessage(), 500);
         }
     }
 
@@ -47,7 +46,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return response()->json(new OrderResource($order));
+        return $this->sendResponse(new OrderResource($order));
     }
 
     /**

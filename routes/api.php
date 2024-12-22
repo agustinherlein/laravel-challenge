@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\OrderController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('status', function(){
@@ -10,9 +10,10 @@ Route::get('status', function(){
 
 Route::apiResource('orders', OrderController::class);
 
-// Auth routes
-Route::post('/tokens/create', function (Request $request) {
-    $token = $request->user()->createToken($request->token_name);
- 
-    return ['token' => $token->plainTextToken];
+Route::prefix('auth')->name('auth.')->group(function () {
+    Route::post('register', [AuthController::class, 'register'])->name('register');
+    Route::post('login', [AuthController::class, 'login'])->name('login');
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    });
 });
