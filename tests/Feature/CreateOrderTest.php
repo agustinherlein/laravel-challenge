@@ -19,10 +19,11 @@ class CreateOrderTest extends TestCase
      */
     public function test_the_order_service_can_create_an_order(): void
     {
+        $this->seed();
         $data = [
             "address_id" => 1,
             "client_id" => 2,
-            "products" => [
+            "items" => [
                 [
                     "id" => 1,
                     "amount" => 3
@@ -37,4 +38,6 @@ class CreateOrderTest extends TestCase
 
         assertNotEmpty(Order::where("id", $order->id));
     }
+
+
 }

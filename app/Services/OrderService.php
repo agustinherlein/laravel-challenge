@@ -6,6 +6,7 @@ use App\Models\EnumOrderStatus;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
+use Exception;
 use stdClass;
 
 class OrderService {
