@@ -37,6 +37,7 @@ class OrderController extends BaseApiController
             $order = $this->orderService->create($data);
             return $this->sendResponse($order, "Se guardó correctamente la orden $order->id");
         } catch (Exception $e) {
+            return dd($e->getMessage());
             return $this->sendError($e->getMessage(), 500);
         }
     }

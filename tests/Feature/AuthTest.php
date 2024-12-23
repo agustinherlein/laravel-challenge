@@ -28,7 +28,7 @@ class AuthTest extends TestCase
         assertNotEmpty(User::where('email', $email));
     }
 
-    public function test_login_with_correct_credentials(): void
+    public function test_can_login_with_correct_credentials(): void
     {
         $password = "Password2";
         $user = User::factory()->create([
@@ -45,4 +45,45 @@ class AuthTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_cannot_login_with_wrong_credentials(): void
+    {
+        $user = User::factory()->create([
+            "password" => bcrypt("rightPassword2")
+        ]);
+
+        $response = $this->postJson(
+            '/api/auth/login',
+            [
+                "email" => $user->email,
+                "password" => "wrongPassword1"
+            ]
+        );
+
+        $response->assertStatus(401);
+    }
+
+    public function test_user_can_access_protected_routes_with_token(): void
+    {
+        $password = "Password3";
+
+        $user = User::factory()->create([
+            "password" => bcrypt($password)
+        ]);
+        $login_response = $this->post('/api/auth/login', [
+            'email' => $user->email,
+            'password' => $password
+        ]);
+        $token = $login_response['data']['token'];
+
+        $response = $this->withToken($token)->getJson('api/orders');
+        $response->assertStatus(200);
+    }
+
+    public function test_user_cannot_access_protected_routes_without_token(): void
+    {
+        $response = $this->getJson('api/orders');
+        $response->assertStatus(401);
+    }
+
 }
